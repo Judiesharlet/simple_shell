@@ -2,22 +2,29 @@
 
 Your program must have the exact same output as sh (/bin/sh) as well as the exact same error output.
 The only difference is when you print an error, the name of the program must be equivalent to your argv[0] (See below)
+
 Example of error with sh:
 
 $ echo "qwerty" | /bin/sh
 /bin/sh: 1: qwerty: not found
+
 $ echo "qwerty" | /bin/../bin/sh
 /bin/../bin/sh: 1: qwerty: not found
+
 $
+
 Same error with your program hsh:
 
 $ echo "qwerty" | ./hsh
 ./hsh: 1: qwerty: not found
+
 $ echo "qwerty" | ./././hsh
 ./././hsh: 1: qwerty: not found
+
 $
 
-List of allowed functions and system calls
+List of allowed functions and system calls:
+
 access (man 2 access)
 chdir (man 2 chdir)
 close (man 2 close)
@@ -51,11 +58,13 @@ wait4 (man 2 wait4)
 write (man 2 write)
 
 Compilation
+
 Your shell will be compiled this way:
 
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 
 Testing
+
 Your shell should work like this in interactive mode:
 
 $ ./hsh
@@ -79,6 +88,7 @@ hsh main.c shell.c test_ls_2
 $
 
 0. Write a beautiful code that passes the Betty checks
+
 1. Write a UNIX command line interpreter.
 
 Usage: simple_shell
@@ -101,9 +111,13 @@ handle commands with arguments
 execve will be the core part of your Shell, don’t forget to pass the environ to it…
 
 2. Handle command lines with arguments
+
 3. Handle the PATH
 fork must not be called if the command doesn’t exist
+
 4. Implement the exit built-in, that exits the shell
 Usage: exit
 You don’t have to handle any argument to the built-in exit
+
 5. Implement the env built-in, that prints the current environment
+
