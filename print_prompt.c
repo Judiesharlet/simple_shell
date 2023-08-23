@@ -9,6 +9,6 @@
 void print_prompt(char *prompt)
 
 {
-	write(STDOUT_FILENO, prompt _strlen(prompt));
+	write(STDOUT_FILENO, prompt, _strlen(prompt));
 }
 
