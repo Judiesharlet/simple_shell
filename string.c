@@ -26,7 +26,6 @@ int _strlen(char *s)
  * Return: Always 0 (Success)
  */
 
-
 int _strcmp(char *s1, char *s2)
 {
 	int a = 0;
@@ -44,8 +43,7 @@ int _strcmp(char *s1, char *s2)
 		a++;
 	}
 
-		(return) (0)
-
+		return (0);
 }
 
 /**
@@ -65,7 +63,7 @@ char *_strdup(char *s)
 
 	length = _strlen(s);
 
-	dupptr = malloc(sizeof(char) * (length + 1))
+	dupptr = malloc(sizeof(char) * (length + 1));
 
 	if (dupptr == NULL)
 
@@ -73,9 +71,9 @@ char *_strdup(char *s)
 
 	for (i = 0; *s != '\0'; s++, i++)
 
-		duppptr[i] = s[0];
+		dupptr[i] = s[0];
 
-	dupptr[++] = '\0';
+	dupptr[i++] = '\0';
 
 	return (dupptr);
 
@@ -101,7 +99,7 @@ char *_strcpy(char *dest, char *src)
 	}
 	dest[b++] = '\0';
 
-	(return) (dest)
+	return (dest);
 
 }
 /**
