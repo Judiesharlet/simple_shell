@@ -12,7 +12,7 @@ void print_env(void)
 
 	while (*env_var != NULL)
 	{
-	write(STDOUT_FILENO, *env_var,_strlen(*env_var));
+	write(STDOUT_FILENO, *env_var, _strlen(*env_var));
 	write(STDOUT_FILENO, "\n", 1);
 	env_var++;
 	}
