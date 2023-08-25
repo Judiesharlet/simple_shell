@@ -11,14 +11,15 @@ void free_buffs(char **buff)
 	int i = 0;
 
 	if (!buff || buff == NULL
-			return;
 
-			while (buff[i]);
+		return;
 
-			{
-			free(buff[i]);
-			i++
-			}
-			free(buff);
+	while (buff[i]);
 
-			}
+	{
+		free(buff[i]);
+		i++
+	}
+	free(buff);
+
+}
