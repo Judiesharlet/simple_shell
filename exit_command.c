@@ -2,13 +2,17 @@
 
 /**
  * exit_command-handles exit command and exits the shell
- * @command: pointer to a character string that represents a command
- * to be checked
- * Return:int
+ * @command: command and its arguments that were tokenized
+ * from the user input
+ * @line: input line provided by the user
+ *
+ * Return:void
  */
-int exit_command(char *command)
-{
-	return (_strcmp(command, "exit") == 0);
+void exit_command(char **command, char *line)
 
+{
+	free(line);
+	free_buffs(command);
+	exit(0);
 }
 
