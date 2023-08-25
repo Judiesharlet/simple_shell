@@ -2,45 +2,29 @@
 
 /**
  * execute_command - executes a command with arguments
+ * @cmd: the command
  * @av: double pointer to an array of strings
  *
  * Return: void
  */
 
-void execute_command(char **av)
+void execute_command(char *cmd, char **av)
 {
-	char *command = NULL, *ac = NULL;
 	pid_t child_pid;
 	int status;
+	char **env_var = environ;
 
-	if (av)
+	child_pid = fork();
+	if (child_pid < 0)
+		perror(cmd);
+	if (child_pid == 0)
 	{
-		command = av[0];
-
-		ac = get_path(command);
-
-		if (ac == NULL)
-		{
-			perror(command);
-			return;
-		}
-
-		child_pid = fork();
-		if (child_pid == -1)
-		{
-			perror("Error:");
-		}
-		else if (child_pid == 0)
-		{
-			if (execve(ac, av, NULL) == -1)
-			{
-				perror(command);
-				exit(EXIT_FAILURE);
-			}
-		}
-		else
-		{
-			waitpid(child_pid, &status, 0);
-		}
+		execve(cmd, av, env_var);
+		perror(cmd);
+		free(cmd);
+		free_buffs(av);
+		exit(98);
 	}
+	else
+		wait(&status);
 }

@@ -2,49 +2,50 @@
 
 /**
  * tokenizeLine - tokenizes a string into an array of words
- * @str: pointer to the input string that you want to tokenize
- * @delim: pointer to a constant character string that
- * specifies the delimiter characters
+ * @line: pointer to the input string that you want to tokenize
  *
  * Return: array of strings (tokens) that were extracted
  * from the input string
  */
 
-char **tokenizeLine(char *str, const char *delim)
+char **tokenizeLine(char *line)
 {
-	char **av = NULL;
-	char *str_copy, *token;
-	int i, token_count = 0;
+	char *lineptr = NULL, *lineptr_copy = NULL;
+	char *token = NULL, *delim = " :\t\r\n";
+	char **tokens = NULL;
+	int token_count = 1;
+	size_t i = 0, flag = 0;
 
-	str_copy = _strdup(str);
-	if (str_copy == NULL)
-	{
-		free(str_copy);
-		perror("tsh: memory allocation error");
+	lineptr = _strdup(line);
+	if (!lineptr)
 		return (NULL);
-	}
+	lineptr_copy = lineptr;
 
-	token = strtok(str, delim);
-
-	while (token != NULL)
+	while (*lineptr_copy)
 	{
-		token_count++;
-		token = strtok(NULL, delim);
+		if (_strchr(delim, *lineptr_copy) != NULL && flag == 0)
+		{
+			token_count++;
+			flag = 1;
+		}
+		else if (_strchr(delim, *lineptr_copy) == NULL && flag == 1)
+			flag = 0;
+		lineptr_copy++;
 	}
-	token_count++;
-
-	av = malloc(sizeof(char *) * token_count);
-
-	token = strtok(str_copy, delim);
-
-	for (i = 0; token != NULL; i++)
+	tokens = malloc(sizeof(char *) * (token_count + 1));
+	token = strtok(lineptr, delim);
+	while (token)
 	{
-		av[i] = malloc(sizeof(char) * _strlen(token));
-		_strcpy(av[i], token);
+		tokens[i] = _strdup(token);
+		if (tokens[i] == NULL)
+		{
+			free(tokens);
+			return (NULL);
+		}
 		token = strtok(NULL, delim);
+		i++;
 	}
-	av[i] = NULL;
-
-	free(str_copy);
-	return (av);
+	tokens[i] = '\0';
+	free(lineptr);
+	return (tokens);
 }

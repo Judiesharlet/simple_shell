@@ -9,38 +9,41 @@
  */
 int main(int ac, char **av)
 {
-	char *prompt = "$ ", *lineptr = NULL;
-	char **command;
+	char *lineptr = NULL, *command_path = NULL, *path = NULL;
 	size_t len = 0;
-	ssize_t num_chars;
-	const char *delim = " \n";
-	(void)ac, (void)av;
-
+	ssize_t num_chars = 0;
+	char **command = NULL, **paths = NULL;
+	(void)av;
+	if (ac < 1)
+		return (-1);
+	signal(SIGINT, handle_signal);
 	while (1)
 	{
-		print_prompt(prompt);
+		free_buffs(command);
+		free_buffs(paths);
+		free(command_path);
+		print_prompt();
 		num_chars = getline(&lineptr, &len, stdin);
-		if (num_chars == -1)
-			return (-1);
-		lineptr[num_chars - 1] = '\0';
-		command = tokenizeLine(lineptr, delim);
-		if (command == NULL || *command == NULL || **command == '\0')
-		{
-			free(lineptr);
-			continue;
-		}
-		if (exit_command(command[0]))
+		if (num_chars < 0)
 			break;
-
-		if (_strcmp(command[0], "env") == 0)
-		{
-			print_env();
-		}
+		info.ln_count++;
+		if (lineptr[num_chars - 1] == '\n')
+			lineptr[num_chars - 1] = '\0';
+		command = tokenizeLine(lineptr);
+		if (command == NULL || *command == NULL || **command == '\0')
+			continue;
+		if (builtin_checker(command, lineptr))
+			continue;
+		path = find_path();
+		paths = tokenizeLine(path);
+		command_path = test_path(paths, command[0]);
+		if (!command_path)
+			perror(av[0]);
 		else
-		{
-			execute_command(command);
-		}
+			execute_command(command_path, command);
 	}
+	if (num_chars < 0 && flags.interactive)
+		write(STDERR_FILENO, "\n", 1);
 	free(lineptr);
 	return (0);
 }
