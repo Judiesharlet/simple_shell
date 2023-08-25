@@ -4,22 +4,19 @@
  * free_buffs - frees buffers
  * @buff: buffer to be freed
  *
- * Return:void
+ * Return: void
  */
+
 void free_buffs(char **buff)
 {
 	int i = 0;
 
-	if (!buff || buff == NULL
-
+	if (!buff || buff == NULL)
 		return;
-
-	while (buff[i]);
-
+	while (buff[i])
 	{
 		free(buff[i]);
-		i++
+		i++;
 	}
 	free(buff);
-
 }

@@ -14,7 +14,8 @@
 
 
 extern char **environ;
-extern __sighandler_t signal(int __sig, __sighandler_t __handler)
+extern __sighandler_t signal(int __sig, __sighandler_t __handler);
+
 /**
  * struct builtin - struct for builtin functions
  *
