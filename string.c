@@ -80,53 +80,46 @@ char *_strdup(char *s)
 }
 
 /**
- * _strcpy - copies the string pointed to by src
- * @dest: destination
- * @src: source
+ * _strncmp - compares two strings up to n bytes
+ * @s1: first string
+ * @s2: second string
+ * @n: number of bytes
  *
- * Return: dest
+ * Return: difference between s1 and s2
  */
-char *_strcpy(char *dest, char *src)
+int _strncmp(char *s1, char *s2, int n)
 
 {
-	int b;
+	int i;
 
-	for (b = 0; src[b] != '\0'; b++)
+	for (i = 0; s1[i] && s2[i] && i < n; i++)
+		{
+	if (s1[i] != s2[i])
+		return (s1[i] - s2[i]);
+		}
 
-	{
-		dest[b] = src[b];
-
-	}
-	dest[b++] = '\0';
-
-	return (dest);
+	return (0);
 
 }
 /**
- * _strcat - concatenates two strings
- * @dest: destination
- * @src: source
+ * _strchr - finds a char in a string
+ * @s: the string
+ * @c: char to be located
  *
- * Return: pointer to the resulting string dest
+ * Return: pointer to first occurence of character
+ * or NULL if char is not found
  */
-char *_strcat(char *dest, char *src)
+char *_strchr(char *s, char c)
 {
-	char *destination = dest;
-
-	while (*dest != '\0')
-
+	while (*s)
 	{
-		dest++;
-	}
-	while (*src != '\0')
-
-	{
-		*dest = *src;
-		dest++;
-		src++;
+	if (*s == c)
+		return (s);
+	s++;
 	}
 
-	*dest = '\0';
-	return (destination);
+	if (!c)
+		return (s);
+	return (NULL);
 }
 
